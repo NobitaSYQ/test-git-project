@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.promotion.PromotionGoodsMapper">
+
+    <!-- 查询某个商品在某个时段是否参加了团购 -->
+    <select id="selectCountByTime" resultType="java.lang.Integer" useCache="false">
+        SELECT COUNT(0) FROM es_promotion_goods
+        WHERE promotion_type = 'GROUPBUY'
+        AND sku_id= #{skuId}
+        <!--
+         * *************第一种情况：******************
+         * 团购时间段：      |________________|
+         * 秒杀时间段：                   |_______|
+         *
+         * *************第二种情况：******************
+         * 团购时间段：      |________________|
+         * 秒杀时间段：  |_____|
+         *
+         * ************第三种情况：******************
+         * 团购时间段：   |________________|
+         * 秒杀时间段：        |______|
+         *
+         * ************第四种情况：******************
+         * 团购时间段：        |______|
+         * 秒杀时间段：   |________________|
+         *
+
+        （团购活动开始时间小于等于当前活动开始时间 并且 团购活动结束时间大于等于当前活动开始时间）或者  第一种情况
+        （团购活动开始时间小于等于当前活动结束时间 并且 团购活动结束时间大于等于当前活动结束时间）或者  第二种情况
+        （团购活动开始时间小于等于当前活动开始时间 并且 团购活动结束时间大于等于当前活动结束时间）或者  第三种情况
+        （团购活动开始时间大于等于当前活动开始时间 并且 团购活动结束时间小于等于当前活动结束时间）     第四种情况
+        -->
+        AND (
+            ( start_time &lt;= #{startTime} AND end_time &gt;= #{startTime} ) OR
+            ( start_time &lt;= #{endTime} AND end_time &gt;= #{endTime} ) OR
+            ( start_time &lt;= #{startTime} AND end_time &gt;= #{endTime} ) OR
+            ( start_time &gt;= #{startTime} AND end_time &lt;= #{endTime} )
+        )
+    </select>
+
+    <select id="selectGoodsList" resultType="com.enation.app.javashop.model.promotion.tool.dos.PromotionGoodsDO" useCache="false">
+        select * from es_promotion_goods where promotion_type = #{promotion_type} and (end_time - #{now_time}) / 86400 &lt; 1
+    </select>
+</mapper>

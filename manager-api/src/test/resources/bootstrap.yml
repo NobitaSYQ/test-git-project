@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: admin-api
+  cloud:
+    config:
+      uri: http://192.168.2.220:8888
+      profile: dev
+server:
+  port: 7004

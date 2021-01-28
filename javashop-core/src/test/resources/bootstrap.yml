@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: core
+  cloud:
+    config:
+      uri: http://localhost:8888
+      profile: dev
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+server:
+  port: 7080
