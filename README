@@ -8,6 +8,7 @@
 + seller-api 卖家后台
 + manager-api 管理后台
 + sba-server spring-boot-admin管理端，可以不启动，用于管理和监控SpringBoot应用程序
++ doc 项目文档，如 config目录存放 springboot配置文件
 
 ## 环境搭建
 
