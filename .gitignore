@@ -7,3 +7,6 @@ logs/
 *.iml
 out
 gen
+
+#maven
+target/
