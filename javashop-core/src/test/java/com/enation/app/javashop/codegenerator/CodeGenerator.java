@@ -1,6 +1,6 @@
 package com.enation.app.javashop.codegenerator;
 
-import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
@@ -8,11 +8,9 @@ import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
-import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Mybatis代码生成
@@ -30,7 +28,7 @@ public class CodeGenerator {
         GlobalConfig gc = new GlobalConfig();
 
         // 项目路径
-        String projectPath = "D:/IdeaProjects/vnb-fss/backend/";
+        String projectPath = "D:/mybatisplus-codegenerator/bmtp/";
         gc.setOutputDir(projectPath + "src/main/java");
         gc.setAuthor("lewis");
         // 是否打开输出目录
@@ -40,15 +38,18 @@ public class CodeGenerator {
         gc.setFileOverride(false);
 
         // 实体属性 Swagger2 注解
-        // gc.setSwagger2(true);
+        gc.setSwagger2(true);
+
+        // tableId类型
+        gc.setIdType(IdType.ASSIGN_ID);
 
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://localhost:3306/fss?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC");
+        dsc.setUrl("jdbc:mysql://localhost:3306/javashop?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=UTC");
         // dsc.setSchemaName("public");
-        dsc.setDriverName("com.mysql.cj.jdbc.Driver");
+        dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("root");
         dsc.setPassword("root");
         mpg.setDataSource(dsc);
@@ -56,7 +57,7 @@ public class CodeGenerator {
         // 包配置
         PackageConfig pc = new PackageConfig();
 //        pc.setModuleName(scanner("模块名"));
-        pc.setParent("com.vivebest.fss");
+        pc.setParent("com.enation.app.javashop");
         pc.setModuleName("");
         mpg.setPackageInfo(pc);
 
@@ -119,8 +120,8 @@ public class CodeGenerator {
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
 
-        // 公共父类实体,没有就不用设置 如 com.vivebest.fss.entity.base.BaseEntity
-//        strategy.setSuperEntityClass("com.vivebest.fss.entity.base.BaseEntity");
+        // 公共父类实体,没有就不用设置
+//        strategy.setSuperEntityClass("com.enation.app.javashop.model.base.BaseEntity");
         // 写于父类中的公共字段
 //        strategy.setSuperEntityColumns("create_time", "create_by", "update_time", "update_by", "delete_status");
 
@@ -129,18 +130,18 @@ public class CodeGenerator {
 
         // 控制器是否是Rest
         strategy.setRestControllerStyle(true);
-        // 公共父类控制器,没有就不用设置 如 com.vivebest.fss.controller.BaseController
+        // 公共父类控制器,没有就不用设置
         strategy.setSuperControllerClass("");
 
         // 表名，多个英文逗号分割
 //        strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
-        strategy.setInclude(null);
+        strategy.setInclude("es_member_group_operator_record", "es_member_credit","es_member_whitelist");
 
         // 驼峰转连字符
         strategy.setControllerMappingHyphenStyle(false);
 
         // 表前缀 如 "t_"
-        strategy.setTablePrefix("t_");
+        strategy.setTablePrefix("t_", "es_");
 
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
