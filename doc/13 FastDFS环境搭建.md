@@ -23,27 +23,27 @@ cd /usr/local/src #切换到安装目录准备下载安装包
 ```
 ## 安装libfatscommon
 ```shell
-git clone https://github.com/happyfish100/libfastcommon.git --depth 1
+git clone https://gitee.com/fastdfs100/libfastcommon.git --depth 1
 cd libfastcommon/
 ./make.sh && ./make.sh install #编译安装
 ```
 ## 安装FastDFS
 ```shell
 cd ../ #返回上一级目录
-git clone https://github.com/happyfish100/fastdfs.git --depth 1
+git clone https://gitee.com/fastdfs100/fastdfs.git --depth 1
 cd fastdfs/
 ./make.sh && ./make.sh install #编译安装
 #配置文件准备
-cp /usr/etc/fdfs/tracker.conf.sample /etc/fdfs/tracker.conf
-cp /usr/etc/fdfs/storage.conf.sample /etc/fdfs/storage.conf
-cp /usr/etc/fdfs/client.conf.sample /etc/fdfs/client.conf #客户端文件，测试用
+cp /etc/fdfs/tracker.conf.sample /etc/fdfs/tracker.conf
+cp /etc/fdfs/storage.conf.sample /etc/fdfs/storage.conf
+cp /etc/fdfs/client.conf.sample /etc/fdfs/client.conf #客户端文件，测试用
 cp /usr/local/src/fastdfs/conf/http.conf /etc/fdfs/ #供nginx访问使用
 cp /usr/local/src/fastdfs/conf/mime.types /etc/fdfs/ #供nginx访问使用
 ```
 ## 安装fastdfs-nginx-module
 ```shell
 cd ../ #返回上一级目录
-git clone https://github.com/happyfish100/fastdfs-nginx-module.git --depth 1
+git clone https://gitee.com/fastdfs100/fastdfs-nginx-module.git --depth 1
 cp /usr/local/src/fastdfs-nginx-module/src/mod_fastdfs.conf /etc/fdfs
 ```
 ## 安装nginx
